@@ -1,33 +1,13 @@
 const resolvers = {
   Query: {
     // Returns the order
-    order: (_, { id }, { dataSources }) => {
-      return dataSources.ordersAPI.getOrder(id);
-    }
+    order: (_, { id }, { dataSources }) => dataSources.ordersAPI.getOrder(id)
   },
+  // @WORKSHOP: Add story here about resolving by references
   Order: {
-    __resolveReference: (order, { dataSources }) => {
-      return dataSources.ordersAPI.getOrder(order.id);
-    },
-    buyer: (root) => {
-      const customerId = root.customerId;
-      return {
-        id: customerId
-      };
-    },
-    items: (root) => {
-      const variantIds = root.variantIds;
-      const items = [];
-
-      for (let index = 0; index < variantIds.length; index++) {
-        const item = {
-          id: variantIds[index]
-        };
-        items.push(item);
-      }
-
-      return items;
-    }
+    __resolveReference: (order, { dataSources }) => dataSources.ordersAPI.getOrder(order.id),
+    buyer: root => ({ id: root.customerId }),
+    items: root => root.variantIds.map(variantId => ({id: variantId}))
   }
 };
 
