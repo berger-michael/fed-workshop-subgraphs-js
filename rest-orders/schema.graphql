@@ -10,7 +10,6 @@ type Query {
 
 """
 Returns information about a specific purchase
-@WORKSHOP: 2.1.1 Include user and items attributes
 """
 type Order @key(fields: "id") {
   """
@@ -18,13 +17,10 @@ type Order @key(fields: "id") {
   """
   id: ID!
 
-
-
   """
   The user who made the purchase
   """
   buyer: User!
-
 
   """
   A list of all the items they purchased. This is the Variants, not the Products so we know exactly which
@@ -33,9 +29,6 @@ type Order @key(fields: "id") {
   items: [ProductVariant!]!
 }
 
-"""
-@WORKSHOP: 2.1.2 Define Stub Types for User and ProductVariant
-"""
 type User @key(fields: "id", resolvable: false) {
   id: ID!
 }
